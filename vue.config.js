@@ -1,5 +1,4 @@
 const { defineConfig } = require('@vue/cli-service')
-const path = require('path')
 
 const AutoImport = require('unplugin-auto-import/webpack')
 const Components = require('unplugin-vue-components/webpack')
@@ -10,7 +9,8 @@ module.exports = defineConfig({
   //应用打包输出的目录
   outputDir: './build',
   //应用程序部署的基础路径
-  publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
+  // publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
+  publicPath: '/',
 
   //方式2：和webpack属性一致
   configureWebpack: {
@@ -24,7 +24,11 @@ module.exports = defineConfig({
         resolvers: [ElementPlusResolver()],
       }),
       Components({
-        resolvers: [ElementPlusResolver()],
+        resolvers: [
+          ElementPlusResolver({
+            importStyle: 'css', // 自动导入组件样式
+          }),
+        ],
       }),
     ],
   },
@@ -39,4 +43,17 @@ module.exports = defineConfig({
   // chainWebpack: (config) => {
   //   config.resolve.alias.set('components', '@/components')
   // },
+
+  //开发环境配置proxy反向代理
+  devServer: {
+    proxy: {
+      '^/api': {
+        target: 'http://codercba.com:5000',
+        pathRewrite: {
+          '^/api': '',
+        },
+        changeOrigin: true,
+      },
+    },
+  },
 })

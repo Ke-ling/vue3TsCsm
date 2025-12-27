@@ -1,32 +1,41 @@
 {
   "compilerOptions": {
+    //编译生成的目标版本代码为esnext es6以后的语法
     "target": "esnext",
+    // 生成代码时使用的模块化方案
     "module": "esnext",
+    // 打开所有严格模式检查
     "strict": true,
+    // jsx的处理方式，保留原有的jsx格式
     "jsx": "preserve",
+    // 从tslib导入辅助函数，减少代码体积
+    "importHelpers": true,
+    // 模块解析策略，node模式下解析模块
     "moduleResolution": "node",
+    // 跳过整个库检查，只检测用到的类型，减少编译时间
     "skipLibCheck": true,
+    // 允许默认导入模块，解决模块默认导出问题 esmodule和commonjs混合使用
     "esModuleInterop": true,
+    // 允许从没有默认导出的模块中默认导入
     "allowSyntheticDefaultImports": true,
+    // 强制文件名大小写一致，避免跨平台问题
     "forceConsistentCasingInFileNames": true,
+    // 使用define定义类字段，避免类字段在运行时被修改
     "useDefineForClassFields": true,
+    // 生成sourcemap文件，方便调试
     "sourceMap": true,
+    // 基础路径，用于解析模块路径
     "baseUrl": ".",
-    "types": [
-      "webpack-env"
-    ],
+    // 类型定义文件，用于提供类型检查和智能提示
+    "types": ["webpack-env", "vite/client"],
+    // 路径别名，用于简化模块导入路径
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "@/*": ["src/*"]
     },
-    "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable",
-      "scripthost"
-    ]
+    // 库文件，用于提供类型检查和智能提示
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
+  // 包含的文件，用于指定编译的文件范围
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
@@ -34,7 +43,5 @@
     "tests/**/*.ts",
     "tests/**/*.tsx"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

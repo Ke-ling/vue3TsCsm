@@ -8,9 +8,11 @@ const hyRequest = new HYRequest({
   timeout: TIME_OUT,
   interceptors: {
     requestInterceptors: (config) => {
-      // 携带token的拦截
+      console.log('请求拦截器', config)
+
+      // 1.携带token的拦截
       const token = localCache.getCache('token')
-      if (token) {
+      if (token && config.headers) {
         config.headers.Authorization = `Bearer ${token}`
       }
       return config

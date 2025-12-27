@@ -3,7 +3,8 @@ import type { AxiosInstance } from 'axios'
 import type { HYRequestInterceptors, HYRequestConfig } from './type'
 
 // 引入loading组件
-import 'element-plus/es/components/loading/style.css'
+// import 'element-plus/es/components/loading/style/index.css'
+import 'element-plus/theme-chalk/el-loading.css'
 import { ElLoading } from 'element-plus'
 const DEFAULT_LOADING = true
 
