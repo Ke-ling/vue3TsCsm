@@ -11,6 +11,7 @@ import type { ILoginState } from './types'
 import type { IRootState } from '../types'
 
 import router from '@/router'
+import { mapMenusToRoutes } from '@/utils/map-menus'
 
 const loginModule: Module<ILoginState, IRootState> = {
   namespaced: true,
@@ -32,6 +33,12 @@ const loginModule: Module<ILoginState, IRootState> = {
     },
     changeUserMenus(state, userMenus: any) {
       state.userMenus = userMenus // 保存用户菜单
+      // 2.将userMenus 映射为 routes
+      // const routes = mapMenusToRoutes(userMenus)
+      // 3.动态注册路由 一个解决不了的报错：重复注册路由
+      // routes.forEach((route) => {
+      //   router.addRoute('main', route)//将每个路由添加到main路由下的子路由当中
+      // })
     },
   },
   actions: {
@@ -66,6 +73,21 @@ const loginModule: Module<ILoginState, IRootState> = {
 
       // 4.跳转到首页
       router.push('/main')
+    },
+    //1.action函数用于初始化vuex数据，可派发login/loadLocalLogin触发函数回调
+    loadLocalLogin({ commit, dispatch }) {
+      const token = localCache.getCache('token')
+      if (token) {
+        commit('changeToken', token)
+      }
+      const userInfo = localCache.getCache('userInfo')
+      if (userInfo) {
+        commit('changeUserInfo', userInfo)
+      }
+      const userMenus = localCache.getCache('userMenus')
+      if (userMenus) {
+        commit('changeUserMenus', userMenus)
+      }
     },
   },
 }
